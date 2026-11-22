@@ -118,14 +118,14 @@ describe('Talvi HSTool technology', () => {
     }
   );
 
-  it('does not infer rapid/setup/acceleration or import Glory Star overhead', () => {
+  it('leaves the table motion to the profile and does not import Glory Star overhead', () => {
     const options = getTalviTechnologyOptions(sourceFile);
     expect(options.rapidSpeed).toBeUndefined();
     expect(options.setupTimeSec).toBeUndefined();
     expect(options.accelerationMmPerSec2).toBeUndefined();
     expect(getMachineProfile('talvi-6000w-raytools').cuttingSpeeds).toBeUndefined();
-    expect(() => calculateCuttingTime([], options)).toThrow(/Velocidade de posicionamento/);
     const movements = [{ start: { x: 0, y: 0 }, end: { x: 1500, y: 0 }, isCutting: true }];
+    expect(calculateCuttingTime(movements, options).setupTimeSec).toBe(1.5);
     const result = calculateCuttingTime(movements, { ...options, ...table });
     expect(result.cuttingTimeSec).toBeCloseTo(60.025, 10);
     expect(result.piercingTimeSec).toBeCloseTo(0.56, 10);

@@ -12,14 +12,15 @@ Agrupar referências de processo, movimento e limites por máquina.
 - `hypertherm-hpr400xd`: aço carbono convencional O₂/ar; receitas discretas
   com corrente selecionada para acabamento, feed, atraso normal de perfuração e kerf.
 ## Fluxo principal
-O cálculo omisso seleciona Glory Star. Talvi exige `cuttingSpeed`, `pierceTime`,
-`rapidSpeed`, `setupTimeSec` e `accelerationMmPerSec2` explícitos.
+O cálculo omisso seleciona Glory Star. Talvi exige `cuttingSpeed` e `pierceTime` (receita);
+`rapidSpeed`, `setupTimeSec` e `accelerationMmPerSec2` vêm do perfil (pós SigmaNEST, setup de
+referência) e podem ser sobrescritos.
 As receitas Talvi não são aplicadas automaticamente por espessura: N₂/O₂ e bicos
 alternativos não devem ser misturados. A seleção HSTool infere mm/s e ms com
 avisos; exige duração informada quando não há etapas habilitadas. Rápido, setup e
-aceleração da mesa continuam explícitos.
-HPR400XD fornece feed/perfuração da espessura exata; rápido/setup/aceleração
-permanecem explícitos, pois dependem da mesa. Consulte corrente e origem com
+aceleração da mesa vêm do perfil, salvo sobrescrita.
+HPR400XD fornece feed/perfuração da espessura exata e o movimento de mesa do pós SigmaNEST
+(1200 mm/min, 416,666 mm/s²), sobrescritível, pois depende da mesa. Consulte corrente e origem com
 `getHprCarbonSteelRecipe(thicknessMm)`.
 ## Erros e casos-limite
 O compartilhamento da máquina não é consultado durante o cálculo.

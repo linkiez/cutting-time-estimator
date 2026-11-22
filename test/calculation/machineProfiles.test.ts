@@ -24,12 +24,15 @@ describe('Machine profiles', () => {
     expect(() => calculateCuttingTime(movements, options)).toThrow(/Talvi/);
   });
 
-  it('exposes immutable identities without inventing Talvi parameters', () => {
+  it('exposes immutable identities with the table of the SigmaNEST post and no invented recipe', () => {
     const profile = getMachineProfile('talvi-6000w-raytools');
     expect(profile).toEqual({
       id: 'talvi-6000w-raytools', name: 'Talvi 6000 W / Raytools',
-      laserPowerW: 6000, cuttingHead: 'Raytools', parameterStatus: 'requires-parameters'
+      laserPowerW: 6000, cuttingHead: 'Raytools', parameterStatus: 'requires-parameters',
+      rapidSpeed: 26000, setupTimeSec: 1.5, accelerationMmPerSec2: 200
     });
+    expect(profile.cuttingSpeeds).toBeUndefined();
+    expect(profile.pierceTimes).toBeUndefined();
     expect(Object.keys(MACHINE_PROFILES)).toHaveLength(3);
     expect(Object.isFrozen(MACHINE_PROFILES)).toBe(true);
     expect(Object.isFrozen(profile)).toBe(true);
@@ -44,14 +47,31 @@ describe('Machine profiles', () => {
 
   it.each([
     ['cuttingSpeed', 'Velocidade de corte'],
-    ['pierceTime', 'Tempo de perfuração'],
-    ['rapidSpeed', 'Velocidade de posicionamento'],
-    ['setupTimeSec', 'Tempo de setup'],
-    ['accelerationMmPerSec2', 'Aceleração']
-  ] as const)('requires Talvi parameter %s independently', (field, name) => {
+    ['pierceTime', 'Tempo de perfuração']
+  ] as const)('still requires the Talvi recipe parameter %s', (field, name) => {
     const incomplete = { ...talviOptions };
     delete incomplete[field];
     expect(() => calculateCuttingTime(movements, incomplete)).toThrow(`Talvi 6000 W / Raytools: informe ${name}`);
+  });
+
+  it('takes the Talvi table motion from the profile when the caller does not give it', () => {
+    const { rapidSpeed, setupTimeSec, accelerationMmPerSec2, ...recipeOnly } = talviOptions;
+    expect([rapidSpeed, setupTimeSec, accelerationMmPerSec2]).toEqual([1200, 2, 10]);
+    const result = calculateCuttingTime(movements, recipeOnly);
+    expect(result.setupTimeSec).toBe(1.5);
+    expect(result.movementTimeSec).toBeGreaterThan(0);
+  });
+
+  it.each([
+    ['rapidSpeed', 1200],
+    ['setupTimeSec', 2],
+    ['accelerationMmPerSec2', 10]
+  ] as const)('lets the caller override the Talvi profile %s', (field, value) => {
+    const { rapidSpeed, setupTimeSec, accelerationMmPerSec2, ...recipeOnly } = talviOptions;
+    expect([rapidSpeed, setupTimeSec, accelerationMmPerSec2]).toHaveLength(3);
+    const byProfile = calculateCuttingTime(movements, recipeOnly);
+    const overridden = calculateCuttingTime(movements, { ...recipeOnly, [field]: value });
+    expect(overridden.totalTimeSec).not.toBeCloseTo(byProfile.totalTimeSec, 6);
   });
 
   it.each(['cuttingSpeed', 'pierceTime', 'rapidSpeed', 'setupTimeSec', 'accelerationMmPerSec2'] as const)(

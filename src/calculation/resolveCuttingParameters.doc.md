@@ -10,9 +10,10 @@ overhead de movimento específico do perfil.
 ## Fluxo principal
 Valida espessura e alcance das tabelas, resolve valores opcionais, valida números
 finitos e restrições de perfuração.
-Glory Star é o perfil padrão. Talvi exige parâmetros explícitos sem herdar referências.
-HPR400XD aplica somente receitas exatas de aço carbono O₂/ar; rápido, setup e
-aceleração da mesa devem ser explícitos.
+Glory Star é o perfil padrão. Talvi exige a receita explícita e usa o movimento de mesa do próprio
+perfil, sem herdar referências da Glory Star. HPR400XD aplica somente receitas exatas de aço
+carbono O₂/ar e também usa o movimento de mesa do seu perfil; rápido, setup e aceleração
+explícitos nas opções têm prioridade.
 ## Erros e casos-limite
 Rejeita negativos, zeros onde exigida positividade, tipos de perfuração inválidos,
 `flying` sem duração e ausência de receita fora das referências.

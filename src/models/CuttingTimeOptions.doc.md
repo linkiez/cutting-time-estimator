@@ -14,8 +14,8 @@ O [resolver](../calculation/resolveCuttingParameters.ts) valida opções e aplic
 ## Erros e casos-limite
 `scaleFactor` escala geometria, não calibra tempo. `pierceTime` representa o ciclo
 completo por contorno. `setupTimeSec: 0` exclui setup; kerf não multiplica perímetro.
-Talvi exige velocidade de corte, tempo de perfuração, rápido, setup e aceleração
-explícitos; a potência e o fabricante do cabeçote não permitem inferir esses valores.
+Talvi exige velocidade de corte e tempo de perfuração (receita) explícitos; rápido, setup e
+aceleração vêm do perfil quando omitidos e podem ser sobrescritos por valores medidos.
 HPR400XD fornece velocidade/atraso normal de perfuração da receita exata,
 exigindo rápido, setup e aceleração da mesa. O atraso tabelado não inclui o ciclo
 completo de IHS/gases/retração; para estimá-lo, informe `pierceTime` medido.

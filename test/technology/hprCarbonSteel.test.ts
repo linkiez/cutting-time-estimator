@@ -19,10 +19,10 @@ describe('Hypertherm HPR400XD carbon steel', () => {
     const profile = getMachineProfile('hypertherm-hpr400xd');
     expect(profile.cuttingSpeeds?.[12]).toBe(1410);
     expect(profile.pierceTimes?.[12]).toBe(0.7);
-    expect(profile.rapidSpeed).toBeUndefined();
     expect(profile.referenceMotion).toBeUndefined();
-    expect(profile.setupTimeSec).toBeUndefined();
-    expect(profile.accelerationMmPerSec2).toBeUndefined();
+    expect(profile.rapidSpeed).toBe(1200);
+    expect(profile.setupTimeSec).toBe(1.5);
+    expect(profile.accelerationMmPerSec2).toBe(416.666);
     expect(profile).toMatchObject({
       maxCurrentA: 400, material: 'carbon-steel', plasmaGas: 'O2', shieldGas: 'Air',
       exactThicknessOnly: true, parameterStatus: 'reference'
@@ -73,14 +73,11 @@ describe('Hypertherm HPR400XD carbon steel', () => {
     }
   );
 
-  it.each([
-    ['rapidSpeed', 'Velocidade de posicionamento'],
-    ['setupTimeSec', 'Tempo de setup'],
-    ['accelerationMmPerSec2', 'Aceleração']
-  ] as const)('requires table-specific %s instead of using laser defaults', (field, label) => {
-    const incomplete = { ...options };
-    delete incomplete[field];
-    expect(() => calculateCuttingTime(movements, incomplete)).toThrow(label);
+  it('takes the table motion of the post from the profile instead of laser defaults', () => {
+    const { rapidSpeed, setupTimeSec, accelerationMmPerSec2, ...recipeOnly } = options;
+    expect([rapidSpeed, setupTimeSec, accelerationMmPerSec2]).toEqual([1200, 0, 1000]);
+    const result = calculateCuttingTime(movements, recipeOnly);
+    expect(result.setupTimeSec).toBe(1.5);
   });
 
   it('uses normal Pierce Time rather than the shorter Edge Pierce Time', () => {

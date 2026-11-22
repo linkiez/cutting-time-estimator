@@ -128,11 +128,14 @@ interface CuttingTimeOptions {
 | Perfil | Dados de processo | Dados da mesa |
 |---|---|---|
 | `glory-star-gs3015` (padrão) | Referências interpoladas de velocidade e perfuração | Rápido/setup e overhead de movimento de referência |
-| `talvi-6000w-raytools` | Receita HSTool por nome exato ou parâmetros explícitos | Exige `rapidSpeed`, `setupTimeSec` e `accelerationMmPerSec2` |
-| `hypertherm-hpr400xd` | Aço carbono O₂/ar, somente espessuras listadas | Exige `rapidSpeed`, `setupTimeSec` e `accelerationMmPerSec2` |
+| `talvi-6000w-raytools` | Receita HSTool por nome exato ou parâmetros explícitos | Do pós SigmaNEST: 26000 mm/min e 200 mm/s²; setup de 1,5 s de referência (sobrescrevíveis) |
+| `hypertherm-hpr400xd` | Aço carbono O₂/ar, somente espessuras listadas | Do pós SigmaNEST: 1200 mm/min e 416,666 mm/s²; setup de 1,5 s de referência (sobrescrevíveis) |
 
 `MACHINE_PROFILES` e `getMachineProfile(id)` expõem os perfis imutáveis.
-Nenhum perfil herda parâmetros de outra máquina. As constantes públicas
+Nenhum perfil herda parâmetros de outra máquina. Talvi e HPR400XD carregam o movimento de mesa
+dos seus pós SigmaNEST (campo 411), que é configuração do pós e não medição: o posicionamento
+rápido do HPR400XD (1200 mm/min) é o menos confiável, e o setup de 1,5 s é a referência da Glory
+Star. Informe `rapidSpeed`, `setupTimeSec` ou `accelerationMmPerSec2` para usar valores medidos. As constantes públicas
 `CUTTING_SPEEDS`, `PIERCE_TIMES` e demais referências representam somente a Glory Star.
 
 #### Talvi 6000 W / Raytools — receitas HSTool
@@ -319,7 +322,7 @@ o ciclo completo confirmado na máquina. O CSV não é incorporado ao pacote.
   HPR400XD exige espessura exata, sem interpolação ou saturação.
 - Aceleração informada usa um perfil triangular/trapezoidal por contorno contínuo
   e por deslocamento. Sem ela, somente a Glory Star aplica a referência de 0,2 s
-  por contorno ou deslocamento com pelo menos 5 mm; Talvi/HPR400XD exigem aceleração.
+  por contorno ou deslocamento com pelo menos 5 mm; Talvi/HPR400XD usam a aceleração do perfil quando não informada.
   Não existe penalização por subdivisão de curva.
 - Reduções em cantos, jerk, subida/descida de Z, sopro, microjuntas, nesting e
   estratégias do controlador não são simulados. É necessário validar com o CAM

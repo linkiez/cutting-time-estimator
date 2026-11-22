@@ -1,6 +1,9 @@
 import type { MachineProfile } from './MachineProfile';
 import type { MachineProfileId } from './MachineProfileId';
 import { HPR_CARBON_STEEL_RECIPES } from './hprCarbonSteelRecipes';
+import { HPR400XD_TABLE_MOTION } from './hprTableMotion';
+import { POST_SETUP_TIME_SEC } from './postSetupTime';
+import { TALVI_6000W_TABLE_MOTION } from './talviTableMotion';
 import {
   ACCELERATION_TIME, CUTTING_SPEEDS, KERF_DISTANCE, MAX_DISTANCE_FOR_HEAD_DOWN,
   MAX_DISTANCE_FOR_JUMP, MIN_DISTANCE_FOR_ACCELERATION, PIERCE_TIMES, RAPID_SPEED, SETUP_TIME
@@ -29,7 +32,10 @@ export const MACHINE_PROFILES: Readonly<Record<MachineProfileId, MachineProfile>
     name: 'Talvi 6000 W / Raytools',
     laserPowerW: 6000,
     cuttingHead: 'Raytools',
-    parameterStatus: 'requires-parameters'
+    parameterStatus: 'requires-parameters',
+    rapidSpeed: TALVI_6000W_TABLE_MOTION.rapidSpeed,
+    setupTimeSec: POST_SETUP_TIME_SEC,
+    accelerationMmPerSec2: TALVI_6000W_TABLE_MOTION.accelerationMmPerSec2
   }),
   'hypertherm-hpr400xd': Object.freeze({
     id: 'hypertherm-hpr400xd',
@@ -40,6 +46,9 @@ export const MACHINE_PROFILES: Readonly<Record<MachineProfileId, MachineProfile>
     shieldGas: 'Air',
     parameterStatus: 'reference',
     exactThicknessOnly: true,
+    rapidSpeed: HPR400XD_TABLE_MOTION.rapidSpeed,
+    setupTimeSec: POST_SETUP_TIME_SEC,
+    accelerationMmPerSec2: HPR400XD_TABLE_MOTION.accelerationMmPerSec2,
     cuttingSpeeds: Object.freeze(Object.fromEntries(
       HPR_CARBON_STEEL_RECIPES.map(recipe => [recipe.thicknessMm, recipe.cuttingSpeedMmPerMin])
     )),

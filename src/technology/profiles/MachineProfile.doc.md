@@ -15,9 +15,9 @@ O resolver combina overrides do trabalho com valores do perfil selecionado.
 ## Erros e casos-limite
 Ausência de parâmetro não significa zero nem autoriza herdar de outra máquina.
 `reference` indica referências de estimativa, não calibração física confirmada.
-`requires-parameters` indica que o chamador deve fornecer os parâmetros.
-HPR400XD contém referências de processo, mas exige dados explícitos de movimento
-e setup da mesa; `reference` não significa que todo parâmetro esteja disponível.
+`requires-parameters` indica que o chamador deve fornecer a receita de processo.
+Talvi e HPR400XD carregam o movimento de mesa dos pós SigmaNEST (rápido, aceleração) e o
+setup de referência; são configuração do pós, não medição, e o chamador pode sobrescrevê-los.
 ## Exemplos
 `getMachineProfile('talvi-6000w-raytools').laserPowerW` retorna `6000`.
 ## Dependências e integrações
