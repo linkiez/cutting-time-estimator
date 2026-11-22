@@ -12,6 +12,6 @@ A API principal reexporta este barrel; consumidores internos importam módulos-f
 As referências não identificam material, gás, potência nem receita ativa.
 Não substituem a calibração física do equipamento.
 ## Exemplos
-`import { RAPID_SPEED } from '@linkiez/glory-star-calculator';`
+`import { RAPID_SPEED } from '@linkiez/cutting-time-estimator';`
 ## Dependências e integrações
 [Tabela de corte](./cuttingSpeeds.ts), [perfuração](./pierceTimes.ts) e constantes adjacentes.

@@ -78,11 +78,11 @@ To install this package from GitHub Packages, create a `.npmrc` file in your pro
 Then install:
 
 ```bash
-npm install @linkiez/glory-star-calculator
+npm install @linkiez/cutting-time-estimator
 ```
 
 Or with yarn:
 
 ```bash
-yarn add @linkiez/glory-star-calculator
+yarn add @linkiez/cutting-time-estimator
 ```

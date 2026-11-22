@@ -11,6 +11,6 @@ Consumidor → adaptadores Node → leitura de arquivo → processamento SVG.
 ## Erros e casos-limite
 Propaga falhas de leitura, geometria e parâmetros; não retorna estimativas parciais.
 ## Exemplos
-`import { loadSvgFile } from '@linkiez/glory-star-calculator/dist/node'`.
+`import { loadSvgFile } from '@linkiez/cutting-time-estimator/dist/node'`.
 ## Dependências e integrações
 [Adaptadores Node](./adapters/node/) e `node:fs`; não deve ser importada em browsers.

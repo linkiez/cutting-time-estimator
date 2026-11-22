@@ -72,7 +72,7 @@
             "label": "Distribution tarball"
           }
         ],
-        "successComment": "🎉 This issue has been resolved in version ${nextRelease.version}. The release is available on [GitHub Packages](https://github.com/linkiez/glory-star-calculator/packages).",
+        "successComment": "🎉 This issue has been resolved in version ${nextRelease.version}. The release is available on [GitHub Packages](https://github.com/linkiez/cutting-time-estimator/packages).",
         "failComment": false,
         "releasedLabels": ["released"]
       }

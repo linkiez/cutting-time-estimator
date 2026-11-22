@@ -19,7 +19,7 @@ it('keeps generated release commits valid even with long breaking-change notes',
       '### BREAKING CHANGES',
       '',
       `* BREAKING CHANGE: ${'migration detail '.repeat(20)}`,
-      '* Source: https://github.com/linkiez/glory-star-calculator/commit/63fb3c1'
+      '* Source: https://github.com/linkiez/cutting-time-estimator/commit/63fb3c1'
     ].join('\n')
   };
   const message = options.message.replace(/\$\{nextRelease\.(version|notes)\}/g,

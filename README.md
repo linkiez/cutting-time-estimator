@@ -1,8 +1,11 @@
-# Calculadora de tempo de corte — Glory Star, Talvi e Hypertherm
+# Estimador de tempo de corte — Glory Star, Talvi e Hypertherm
 
 Biblioteca em TypeScript para estimar o tempo de corte de SVG e DXF com perfis de
 máquina e seleção explícita de receita. A Glory Star GS3015 é o perfil padrão;
 Talvi 6000 W / Raytools e Hypertherm HPR400XD têm configurações isoladas.
+
+> Antes chamado `@linkiez/glory-star-calculator`. O pacote foi renomeado para `@linkiez/cutting-time-estimator`;
+> troque a dependência e os imports. A API não mudou.
 
 ## Instalação
 
@@ -23,13 +26,13 @@ echo "//npm.pkg.github.com/:_authToken=SEU_GITHUB_TOKEN" >> .npmrc
 Agora você pode instalar o pacote:
 
 ```bash
-npm install @linkiez/glory-star-calculator
+npm install @linkiez/cutting-time-estimator
 ```
 
 Ou com yarn:
 
 ```bash
-yarn add @linkiez/glory-star-calculator
+yarn add @linkiez/cutting-time-estimator
 ```
 
 ## Recursos
@@ -51,7 +54,7 @@ yarn add @linkiez/glory-star-calculator
 ## Uso Básico
 
 ```typescript
-import { calculateCuttingTimeFromSvg } from '@linkiez/glory-star-calculator';
+import { calculateCuttingTimeFromSvg } from '@linkiez/cutting-time-estimator';
 
 // Cálculo a partir de string SVG
 const svgString = `
@@ -74,7 +77,7 @@ console.log(`Distância de corte: ${result.cuttingDistance} mm`);
 Se você estiver usando Node.js, pode importar a função específica:
 
 ```typescript
-import { calculateCuttingTimeFromFile } from '@linkiez/glory-star-calculator/dist/node';
+import { calculateCuttingTimeFromFile } from '@linkiez/cutting-time-estimator/dist/node';
 
 const fileResult = calculateCuttingTimeFromFile('/caminho/para/arquivo.svg', {
   materialThickness: 3.0
@@ -149,8 +152,8 @@ N₂/O₂ e bicos. Não seleciona automaticamente pela espessura nem interpola.
 import {
   calculateCuttingTimeFromSvg,
   getTalviTechnologyOptions
-} from '@linkiez/glory-star-calculator';
-import type { CuttingTimeOptions } from '@linkiez/glory-star-calculator';
+} from '@linkiez/cutting-time-estimator';
+import type { CuttingTimeOptions } from '@linkiez/cutting-time-estimator';
 
 type TableParameters = Required<Pick<CuttingTimeOptions,
   'rapidSpeed' | 'setupTimeSec' | 'accelerationMmPerSec2'>>;
@@ -277,9 +280,9 @@ O typecheck inclui biblioteca, testes, exemplos e ferramentas. O build usa
 
 Os módulos antigos `cuttingCalculator`, `svgProcessor`, `types` e `constants`
 na raiz de `src` não são pontos de entrada suportados. Substitua deep imports
-por imports de `@linkiez/glory-star-calculator`. Os 19 exports de runtime da API
+por imports de `@linkiez/cutting-time-estimator`. Os 19 exports de runtime da API
 principal são preservados. Funções de filesystem continuam separadas em
-`@linkiez/glory-star-calculator/dist/node`; `TechnologySelection` também está
+`@linkiez/cutting-time-estimator/dist/node`; `TechnologySelection` também está
 disponível como tipo pela API principal.
 
 O CSV de desenvolvimento está em
@@ -288,7 +291,7 @@ O CSV de desenvolvimento está em
 ## Receita da máquina
 
 ```typescript
-import { getLaserTechnologyOptions, calculateCuttingTimeFromDxf } from '@linkiez/glory-star-calculator';
+import { getLaserTechnologyOptions, calculateCuttingTimeFromDxf } from '@linkiez/cutting-time-estimator';
 
 // csvContent e dxfContent são strings carregadas pelo aplicativo.
 const recipe = getLaserTechnologyOptions(csvContent, {

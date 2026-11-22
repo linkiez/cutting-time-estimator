@@ -10,7 +10,7 @@ e `getHprCarbonSteelRecipe` para consultar corrente e receita exata de aço carb
 Disponibilizar `TALVI_CARBON_STEEL_RECIPES`, `getTalviTechnologyOptions` e seus
 tipos para selecionar arquivos HSTool confirmados da Talvi.
 ## Entradas e saídas
-Funções disponíveis via `@linkiez/glory-star-calculator`.
+Funções disponíveis via `@linkiez/cutting-time-estimator`.
 ## Fluxo principal
 Consumidor → reexports → implementação correspondente.
 ## Erros e casos-limite
@@ -24,7 +24,7 @@ Para HPR400XD, use `machineProfile: 'hypertherm-hpr400xd'`, espessura tabelada
 e rápido/setup/aceleração explícitos. Receitas de aço carbono O₂/ar não são
 uma garantia de acabamento nem incluem todos os tempos auxiliares da mesa.
 ## Exemplos
-`import { getLaserTechnologyOptions, calculateCuttingTimeFromDxf } from '@linkiez/glory-star-calculator'`.
+`import { getLaserTechnologyOptions, calculateCuttingTimeFromDxf } from '@linkiez/cutting-time-estimator'`.
 ## Dependências e integrações
 O build TypeScript gera `dist/index.js` e declarações para publicação.
 Detalhes dos perfis em [machineProfiles](./technology/profiles/machineProfiles.doc.md).

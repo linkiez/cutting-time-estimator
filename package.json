@@ -1,7 +1,7 @@
 {
-  "name": "@linkiez/glory-star-calculator",
+  "name": "@linkiez/cutting-time-estimator",
   "version": "2.3.0",
-  "description": "Calculadora de tempo de corte para arquivos SVG da máquina GloryStar_GS3015",
+  "description": "Estimador de tempo de corte de arquivos SVG e DXF para máquinas a laser e plasma (Glory Star, Talvi e Hypertherm)",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -26,19 +26,22 @@
   },
   "keywords": [
     "laser",
+    "plasma",
     "corte",
     "tempo",
-    "calculator",
+    "estimator",
     "svg",
+    "dxf",
     "glorystar",
-    "gs3015"
+    "talvi",
+    "hypertherm"
   ],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "repository": {
     "type": "git",
-    "url": "https://github.com/linkiez/glory-star-calculator.git"
+    "url": "https://github.com/linkiez/cutting-time-estimator.git"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"

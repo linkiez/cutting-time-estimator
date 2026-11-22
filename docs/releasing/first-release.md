@@ -43,7 +43,7 @@ git push origin main
 
 ### 4. Acompanhar o Workflow
 
-1. Acesse: <https://github.com/linkiez/glory-star-calculator/actions>
+1. Acesse: <https://github.com/linkiez/cutting-time-estimator/actions>
 2. Verifique o workflow "Release"
 3. O workflow irá:
    - ✅ Instalar dependências
@@ -59,8 +59,8 @@ git push origin main
 
 Após o workflow concluir:
 
-1. **GitHub Release**: <https://github.com/linkiez/glory-star-calculator/releases>
-2. **GitHub Packages**: <https://github.com/linkiez/glory-star-calculator/packages>
+1. **GitHub Release**: <https://github.com/linkiez/cutting-time-estimator/releases>
+2. **GitHub Packages**: <https://github.com/linkiez/cutting-time-estimator/packages>
 
 ## Formato de Commits
 
@@ -130,9 +130,9 @@ echo "@linkiez:registry=https://npm.pkg.github.com" >> .npmrc
 echo "//npm.pkg.github.com/:_authToken=YOUR_TOKEN" >> .npmrc
 
 # Instalar
-npm install @linkiez/glory-star-calculator
+npm install @linkiez/cutting-time-estimator
 # ou
-yarn add @linkiez/glory-star-calculator
+yarn add @linkiez/cutting-time-estimator
 ```
 
 ## Troubleshooting
