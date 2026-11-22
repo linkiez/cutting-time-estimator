@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## 3.0.0 (2026-11-22)
+
+* refactor!: renomear o pacote para @linkiez/cutting-time-estimator ([7bd0c7c](https://github.com/linkiez/cutting-time-estimator/commit/7bd0c7c))
+
+
+### BREAKING CHANGE
+
+* o pacote @linkiez/glory-star-calculator passou a se chamar @linkiez/cutting-time-estimator; troque a dependência e os imports, a API não mudou.
+
+Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>
+
 ## 2.3.0 (2026-11-22)
 
 * feat(profiles): carregar o movimento de mesa dos perfis Talvi e HPR400XD ([1c32d97](https://github.com/linkiez/glory-star-calculator/commit/1c32d97))
