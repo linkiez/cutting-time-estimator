@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2.3.0 (2026-11-22)
+
+* feat(profiles): carregar o movimento de mesa dos perfis Talvi e HPR400XD ([1c32d97](https://github.com/linkiez/glory-star-calculator/commit/1c32d97))
+
 ## 2.2.0 (2026-10-28)
 
 * docs: documentar perfis e receitas Talvi no readme ([0734680](https://github.com/linkiez/glory-star-calculator/commit/0734680))
