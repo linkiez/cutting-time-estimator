@@ -19,7 +19,7 @@ As receitas Talvi não são aplicadas automaticamente por espessura: N₂/O₂ e
 alternativos não devem ser misturados. A seleção HSTool infere mm/s e ms com
 avisos; exige duração informada quando não há etapas habilitadas. Rápido, setup e
 aceleração da mesa vêm do perfil, salvo sobrescrita.
-HPR400XD fornece feed/perfuração da espessura exata e o movimento de mesa do pós SigmaNEST
+HPR400XD fornece feed/perfuração da espessura listada (ou da mais próxima dentro da faixa de 2 a 50 mm) e o movimento de mesa do pós SigmaNEST
 (1200 mm/min, 416,666 mm/s²), sobrescritível, pois depende da mesa. Consulte corrente e origem com
 `getHprCarbonSteelRecipe(thicknessMm)`.
 ## Erros e casos-limite

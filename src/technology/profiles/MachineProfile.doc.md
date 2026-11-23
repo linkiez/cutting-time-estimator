@@ -9,7 +9,7 @@ Identidade, potência em W, fabricante do cabeçote e estado dos parâmetros.
 Tabelas por espessura em mm; feeds em mm/min, tempos em segundos,
 aceleração em mm/s² e limites geométricos em mm.
 `maxCurrentA`, `material`, `plasmaGas` e `shieldGas` descrevem a fonte plasma.
-`exactThicknessOnly` proíbe interpolação/saturação de receitas discretas.
+`exactThicknessOnly` proíbe interpolação/saturação de receitas discretas: dentro da faixa tabelada, uma espessura não listada usa a receita da espessura listada mais próxima (a mais grossa em caso de empate); fora da faixa é rejeitada.
 ## Fluxo principal
 O resolver combina overrides do trabalho com valores do perfil selecionado.
 ## Erros e casos-limite

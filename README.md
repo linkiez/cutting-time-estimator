@@ -132,7 +132,7 @@ interface CuttingTimeOptions {
 |---|---|---|
 | `glory-star-gs3015` (padrão) | Referências interpoladas de velocidade e perfuração | Rápido/setup e overhead de movimento de referência |
 | `talvi-6000w-raytools` | Receita HSTool por nome exato ou parâmetros explícitos | Do pós SigmaNEST: 26000 mm/min e 200 mm/s²; setup de 1,5 s de referência (sobrescrevíveis) |
-| `hypertherm-hpr400xd` | Aço carbono O₂/ar, somente espessuras listadas | Do pós SigmaNEST: 1200 mm/min e 416,666 mm/s²; setup de 1,5 s de referência (sobrescrevíveis) |
+| `hypertherm-hpr400xd` | Aço carbono O₂/ar; espessura não listada dentro de 2 a 50 mm usa a receita da mais próxima | Do pós SigmaNEST: 1200 mm/min e 416,666 mm/s²; setup de 1,5 s de referência (sobrescrevíveis) |
 
 `MACHINE_PROFILES` e `getMachineProfile(id)` expõem os perfis imutáveis.
 Nenhum perfil herda parâmetros de outra máquina. Talvi e HPR400XD carregam o movimento de mesa
@@ -200,7 +200,9 @@ Detalhes: [seleção Talvi](./src/technology/getTalviTechnologyOptions.doc.md) e
 
 #### Hypertherm HPR400XD — aço carbono
 
-Selecione `machineProfile: 'hypertherm-hpr400xd'` e uma espessura listada.
+Selecione `machineProfile: 'hypertherm-hpr400xd'`. Uma espessura não listada dentro da faixa de 2 a 50 mm
+usa a receita da espessura listada mais próxima (a mais grossa em caso de empate); fora da faixa o cálculo
+exige parâmetros explícitos. `getHprCarbonSteelRecipe` continua exigindo espessura listada.
 `getHprCarbonSteelRecipe(thicknessMm)` expõe corrente, feed, atraso de perfuração,
 kerf e linha da planilha de origem; `HPR_CARBON_STEEL_RECIPES` lista as 43 receitas.
 O motor aplica feed e atraso automaticamente, mantendo os parâmetros da mesa explícitos.

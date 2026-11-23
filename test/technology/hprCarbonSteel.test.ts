@@ -64,14 +64,45 @@ describe('Hypertherm HPR400XD carbon steel', () => {
     expect(Object.isFrozen(profile.kerfDistances)).toBe(true);
   });
 
-  it.each([0, -1, NaN, Infinity, 1, 6.35, 20.5, 26.5, 32.5, 39, 41, 46, 51])(
-    'never invents a recipe, clamps or blends currents for %s mm', materialThickness => {
+  it.each([0, -1, NaN, Infinity])('rejects the invalid thickness %s everywhere', materialThickness => {
+    expect(() => getHprCarbonSteelRecipe(materialThickness)).toThrow();
+    expect(() => getCuttingSpeed(materialThickness, 'hypertherm-hpr400xd')).toThrow();
+    expect(() => getPierceTime(materialThickness, 'hypertherm-hpr400xd')).toThrow();
+    expect(() => calculateCuttingTime(movements, { ...options, materialThickness })).toThrow();
+  });
+
+  it.each([1, 1.99, 50.01, 51])(
+    'rejects %s mm, outside the tabulated range of the machine', materialThickness => {
       expect(() => getHprCarbonSteelRecipe(materialThickness)).toThrow();
-      expect(() => getCuttingSpeed(materialThickness, 'hypertherm-hpr400xd')).toThrow();
-      expect(() => getPierceTime(materialThickness, 'hypertherm-hpr400xd')).toThrow();
+      expect(() => getCuttingSpeed(materialThickness, 'hypertherm-hpr400xd')).toThrow(/fora da faixa/);
+      expect(() => getPierceTime(materialThickness, 'hypertherm-hpr400xd')).toThrow(/fora da faixa/);
       expect(() => calculateCuttingTime(movements, { ...options, materialThickness })).toThrow();
     }
   );
+
+  it.each([
+    // [thickness, nearest listed thickness]
+    [2.2, 2], [2.3, 2.5], [6.35, 6], [6.6, 7], [20.4, 20], [20.6, 21], [41, 40], [42.4, 44], [46, 45], [49, 50]
+  ])('takes the recipe of the nearest listed thickness for %s mm (inside the range)',
+    (materialThickness, listed) => {
+      const recipe = getHprCarbonSteelRecipe(listed);
+      expect(getCuttingSpeed(materialThickness, 'hypertherm-hpr400xd')).toBe(recipe.cuttingSpeedMmPerMin);
+      expect(getPierceTime(materialThickness, 'hypertherm-hpr400xd')).toBe(recipe.pierceTimeSec);
+      expect(calculateCuttingTime(movements, { ...options, materialThickness }))
+        .toEqual(calculateCuttingTime(movements, { ...options, materialThickness: listed }));
+    }
+  );
+
+  it.each([[20.5, 21], [26.5, 27], [32.5, 33], [39, 40]])(
+    'prefers the thicker recipe on a tie at %s mm', (materialThickness, listed) => {
+      expect(getCuttingSpeed(materialThickness, 'hypertherm-hpr400xd'))
+        .toBe(getHprCarbonSteelRecipe(listed).cuttingSpeedMmPerMin);
+    }
+  );
+
+  it('keeps the recipe lookup of the current strict: only listed thicknesses', () => {
+    expect(() => getHprCarbonSteelRecipe(6.35)).toThrow(/receita/);
+  });
 
   it('takes the table motion of the post from the profile instead of laser defaults', () => {
     const { rapidSpeed, setupTimeSec, accelerationMmPerSec2, ...recipeOnly } = options;
@@ -94,12 +125,11 @@ describe('Hypertherm HPR400XD carbon steel', () => {
     expect(result.piercingTimeSec).toBe(1.25);
     expect(result.cuttingTimeSec).toBeCloseTo(60.0235, 10);
     expect(getHprCarbonSteelRecipe(12).pierceTimeSec).toBe(0.7);
-    expect(() => calculateCuttingTime(movements, {
-      ...options, materialThickness: 6.35, cuttingSpeed: 1410
-    })).toThrow(/receita tabelada/);
-    expect(() => calculateCuttingTime(movements, {
-      ...options, materialThickness: 6.35, pierceTime: 1.25
-    })).toThrow(/receita tabelada/);
+    // A single override keeps the other parameter from the nearest listed recipe (6 mm).
+    for (const override of [{ cuttingSpeed: 1410 }, { pierceTime: 1.25 }]) {
+      expect(calculateCuttingTime(movements, { ...options, materialThickness: 6.35, ...override }))
+        .toEqual(calculateCuttingTime(movements, { ...options, materialThickness: 6, ...override }));
+    }
   });
 
   it('uses the profile consistently in SVG and DXF adapters', () => {
@@ -112,7 +142,9 @@ describe('Hypertherm HPR400XD carbon steel', () => {
       expect(result.piercingTimeSec).toBe(result.pierceCount * 0.7);
       expect(result.setupTimeSec).toBe(0);
     }
-    expect(() => calculateCuttingTimeFromSvg(svg, { ...options, materialThickness: 6.35 })).toThrow();
-    expect(() => calculateCuttingTimeFromDxf(dxf, { ...options, materialThickness: 6.35 })).toThrow();
+    expect(() => calculateCuttingTimeFromSvg(svg, { ...options, materialThickness: 51 })).toThrow();
+    expect(() => calculateCuttingTimeFromDxf(dxf, { ...options, materialThickness: 51 })).toThrow();
+    expect(calculateCuttingTimeFromSvg(svg, { ...options, materialThickness: 6.35 }).piercingTimeSec)
+      .toBe(getHprCarbonSteelRecipe(6).pierceTimeSec);
   });
 });

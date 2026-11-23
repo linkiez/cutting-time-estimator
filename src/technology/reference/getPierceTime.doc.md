@@ -10,8 +10,9 @@ Espessura em mm e identificador de máquina opcional; duração em segundos.
 Resolve perfil (Glory Star por padrão) e delega a [interpolateParameter](./interpolateParameter.doc.md).
 ## Erros e casos-limite
 Espessura deve ser positiva e finita; extremos saturam nesta API de consulta.
-Exceção: perfis `exactThicknessOnly`, como HPR400XD, exigem espessura listada
-e não interpolam nem saturam extremos. HPR400XD retorna atraso normal da tabela,
+Exceção: perfis `exactThicknessOnly`, como HPR400XD, não interpolam nem saturam:
+espessura não listada dentro da faixa tabelada usa a receita da espessura listada mais
+próxima (a mais grossa em caso de empate); fora da faixa gera erro. HPR400XD retorna atraso normal da tabela,
 não ciclo completo de IHS/gases/retração.
 Perfil desconhecido ou sem tabela (Talvi) gera erro, sem referência de outra máquina.
 ## Exemplos
