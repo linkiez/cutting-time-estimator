@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 3.1.0 (2026-11-23)
+
+* feat(hpr): usar a receita da espessura mais próxima dentro da faixa ([0ad6bdf](https://github.com/linkiez/cutting-time-estimator/commit/0ad6bdf))
+
 ## 3.0.0 (2026-11-22)
 
 * refactor!: renomear o pacote para @linkiez/cutting-time-estimator ([7bd0c7c](https://github.com/linkiez/cutting-time-estimator/commit/7bd0c7c))

@@ -1,6 +1,6 @@
 {
   "name": "@linkiez/cutting-time-estimator",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Estimador de tempo de corte de arquivos SVG e DXF para máquinas a laser e plasma (Glory Star, Talvi e Hypertherm)",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
